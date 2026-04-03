@@ -8,7 +8,7 @@ HeartSense is a machine learning-based screening support tool that predicts hear
 
 The system features a dual-mode prediction tool: a full model using all 11 clinical features (including exercise stress test results), and a routine-care model using only the 7 features available during a standard patient visit at Health Centre III/IV facilities.
 
-**Live Demo:** [heartsense-group6.streamlit.app](https://heartsense-group6.streamlit.app)
+**Live Demo:** [heartsense-group6-cpjbyehstjdbxgv52aenhb.streamlit.app](https://heartsense-group6-cpjbyehstjdbxgv52aenhb.streamlit.app/)
 
 ## Team
 
