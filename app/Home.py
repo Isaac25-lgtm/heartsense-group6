@@ -25,7 +25,7 @@ st.markdown(
     | Department of Computing & Technology
 
     **Course:** CSC8204: Artificial Intelligence and Machine Learning
-    | **Programme:** MSc Data Science and Analytics / MSc Computer Science
+    | **Programme:** MSc Data Science and Analytics
     | **Group 6** | Easter 2026
 
     | Student | Registration No. |

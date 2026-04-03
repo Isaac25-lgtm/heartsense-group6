@@ -19,7 +19,7 @@ The system features a dual-mode prediction tool: a full model using all 11 clini
 | Nixon Kamugisha | B00321 | MSc Data Science and Analytics |
 | Musoke Emmanuel | B31367 | MSc Data Science and Analytics |
 | Mwesigwa Simon Peter Godwin | B31335 | MSc Data Science and Analytics |
-| Omoding Isaac | B31331 | MSc Computer Science |
+| Omoding Isaac | B31331 | MSc Data Science and Analytics |
 
 **Course:** CSC8204 - Artificial Intelligence and Machine Learning | Easter 2026
 
