@@ -223,7 +223,9 @@ def load_eda_assets():
 def load_feature_columns(model_type="full"):
     """Load feature column names for the given model type."""
     data = load_json(MODELS_DIR, "feature_columns.json")
-    return data.get(model_type, data.get("full"))
+    if model_type == "routine":
+        return data.get("reduced_pipeline_columns", data.get("full_pipeline_columns"))
+    return data.get("full_pipeline_columns", data.get("full"))
 
 
 def load_model_metadata():

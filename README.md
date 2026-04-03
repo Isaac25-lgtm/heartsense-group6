@@ -46,13 +46,23 @@ The [Combined Heart Disease Dataset](https://www.kaggle.com/datasets/fedesoriano
 
 Three algorithms were trained and compared using stratified 5-fold cross-validation with recall as the primary metric (prioritising the detection of true disease cases in a screening context).
 
+**Cross-Validation Results (Training Data, 5-Fold Stratified)**
+
+| Model | Recall | Precision | F1 | ROC-AUC | PR-AUC |
+|-------|--------|-----------|-----|---------|--------|
+| Logistic Regression | 0.8547 | 0.8597 | 0.8561 | 0.9060 | 0.9007 |
+| **Random Forest** | **0.9040** | **0.8627** | **0.8818** | **0.9280** | **0.9306** |
+| XGBoost | 0.8868 | 0.8561 | 0.8705 | 0.9119 | 0.9115 |
+
+**Selected model:** Random Forest (threshold 0.49). It tied with XGBoost for highest recall at the tuned threshold and was chosen for stronger precision, F1-score, and calibration (lowest Brier score). Model selection was locked before the test set was evaluated.
+
+**Hold-Out Test Set Results (Evaluated Once, After All Decisions Were Locked)**
+
 | Model | Recall | Precision | F1 | ROC-AUC | PR-AUC | Brier Score |
 |-------|--------|-----------|-----|---------|--------|-------------|
 | Logistic Regression | 0.8922 | 0.8349 | 0.8626 | 0.8918 | 0.8805 | 0.1281 |
 | **Random Forest** | **0.8824** | **0.9000** | **0.8911** | **0.9317** | **0.9334** | **0.1043** |
 | XGBoost | 0.8529 | 0.8788 | 0.8657 | 0.9099 | 0.9193 | 0.1327 |
-
-**Selected model:** Random Forest (threshold 0.49). It tied with XGBoost for highest recall at the tuned threshold and was chosen for stronger precision, F1-score, and calibration (lowest Brier score). Model selection was locked before the test set was evaluated.
 
 ### Full Model vs Routine-Care Model
 
