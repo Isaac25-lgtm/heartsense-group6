@@ -72,23 +72,27 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.markdown("**Demographics**")
-    age = st.slider("Age (years)", 20, 90, 55 if sample else 50)
-    sex = st.selectbox("Sex", ["M", "F"], index=0)
+    age = st.slider("Age (years)", 20, 90, 55 if sample else 50,
+                    help="Older age is one of the strongest risk factors for heart disease.")
+    sex = st.selectbox("Sex", ["M", "F"], index=0,
+                       help="Males tend to have higher heart disease rates in this dataset.")
 
     st.markdown("**Cardiovascular Indicators**")
-    resting_bp = st.slider("Resting Blood Pressure (mmHg)", 80, 200, 140 if sample else 120)
+    resting_bp = st.slider("Resting Blood Pressure (mmHg)", 80, 200, 140 if sample else 120,
+                           help="Blood pressure at rest. Values above 130 indicate hypertension.")
     cholesterol = st.slider(
         "Serum Cholesterol (mg/dl)",
         0,
         600,
         250 if sample else 200,
-        help="Enter 0 if not measured. The pipeline will treat this as missing and impute it.",
+        help="A waxy substance in the blood. Enter 0 if not measured and it will be imputed.",
     )
     fasting_bs = st.selectbox(
         "Fasting Blood Sugar > 120 mg/dl?",
         [0, 1],
         index=1 if sample else 0,
         format_func=lambda x: "Yes" if x == 1 else "No",
+        help="Elevated fasting blood sugar can indicate diabetes, a heart disease risk factor.",
     )
 
 with col2:
@@ -103,6 +107,7 @@ with col2:
             "NAP": "NAP (Non-Anginal Pain)",
             "TA": "TA (Typical Angina)",
         }[x],
+        help="Asymptomatic (no chest pain) is paradoxically the most common type in heart disease patients.",
     )
     resting_ecg = st.selectbox(
         "Resting ECG",
@@ -113,18 +118,22 @@ with col2:
             "ST": "ST-T Abnormality",
             "LVH": "Left Ventricular Hypertrophy",
         }[x],
+        help="The heart's electrical activity at rest. Abnormalities may indicate existing heart problems.",
     )
 
     if not is_routine:
         st.markdown("**Exercise Test Results**")
-        max_hr = st.slider("Max Heart Rate Achieved", 60, 202, 150 if sample else 150)
+        max_hr = st.slider("Max Heart Rate Achieved", 60, 202, 150 if sample else 150,
+                           help="Highest heart rate during a stress test. Lower values were associated with higher risk in this dataset.")
         exercise_angina = st.selectbox(
             "Exercise-Induced Angina?",
             ["N", "Y"],
             index=1 if sample else 0,
             format_func=lambda x: "Yes" if x == "Y" else "No",
+            help="Chest pain triggered by exercise, a sign that the heart may not be getting enough blood.",
         )
-        oldpeak = st.slider("ST Depression (Oldpeak)", 0.0, 6.0, 1.5 if sample else 0.0, step=0.1)
+        oldpeak = st.slider("ST Depression (Oldpeak)", 0.0, 6.0, 1.5 if sample else 0.0, step=0.1,
+                            help="Drop in the ST segment on an ECG during exercise. Higher values suggest reduced blood flow.")
         st_slope = st.selectbox(
             "ST Slope",
             ["Up", "Flat", "Down"],
@@ -134,6 +143,7 @@ with col2:
                 "Flat": "Flat (intermediate)",
                 "Down": "Downsloping (worst)",
             }[x],
+            help="Direction of the ST segment during exercise. Flat or downsloping patterns are more concerning.",
         )
 
 st.markdown("---")
