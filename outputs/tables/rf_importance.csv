@@ -1,0 +1,15 @@
+feature,gini_importance
+ordinal__ST_Slope,0.26385536292788986
+numeric__MaxHR,0.11917736916581127
+numeric__Oldpeak,0.1091816926198237
+nominal__ExerciseAngina_Y,0.10894545252005099
+numeric__Cholesterol,0.0782455200934099
+numeric__Age,0.07288374445284153
+numeric__RestingBP,0.05723968522426221
+nominal__ChestPainType_ATA,0.05404383842091022
+nominal__Sex_M,0.03780668454320883
+passthrough__FastingBS,0.035612571812228655
+nominal__ChestPainType_NAP,0.033621933760006405
+nominal__RestingECG_Normal,0.01246710925347086
+nominal__ChestPainType_TA,0.009740937219449465
+nominal__RestingECG_ST,0.007178097986635938

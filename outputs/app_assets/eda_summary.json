@@ -1,0 +1,46 @@
+{
+  "n_records": 918,
+  "n_features": 11,
+  "target_counts": {
+    "disease": 508,
+    "normal": 410
+  },
+  "target_pct": {
+    "disease": 55.3,
+    "normal": 44.7
+  },
+  "cholesterol_zeros": 172,
+  "restingbp_zeros": 1,
+  "cholesterol_median_clean": 237.0,
+  "duplicates": 0,
+  "numeric_features": [
+    "Age",
+    "RestingBP",
+    "Cholesterol",
+    "MaxHR",
+    "Oldpeak"
+  ],
+  "categorical_features": [
+    "Sex",
+    "ChestPainType",
+    "RestingECG",
+    "ExerciseAngina",
+    "ST_Slope",
+    "FastingBS"
+  ],
+  "stress_test_features": [
+    "MaxHR",
+    "ExerciseAngina",
+    "Oldpeak",
+    "ST_Slope"
+  ],
+  "routine_care_features": [
+    "Age",
+    "Sex",
+    "ChestPainType",
+    "RestingBP",
+    "Cholesterol",
+    "FastingBS",
+    "RestingECG"
+  ]
+}

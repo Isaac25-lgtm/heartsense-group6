@@ -1,0 +1,4 @@
+{
+  "threshold": 0.49,
+  "strategy": "recall_90"
+}

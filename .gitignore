@@ -1,0 +1,46 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_metadata/
+
+# Models and artifacts
+# NOTE: joblib and pkl files are tracked because Streamlit Cloud needs them.
+# If models exceed GitHub limits, use Git LFS instead.
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Kaggle cache
+.cache/
+
+# Environment variables
+.env
+
+# Temp/debug files
+.tmp_*
+.app8501_*
+.streamlit_test_*
+
+# Exam documents (not part of the app)
+*.docx
+*.pptx
+*.pdf

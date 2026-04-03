@@ -1,0 +1,15 @@
+feature,coefficient,abs_coefficient,direction
+ordinal__ST_Slope,-1.5089646277579254,1.5089646277579254,Decreases risk
+nominal__ExerciseAngina_Y,0.8159204178672745,0.8159204178672745,Increases risk
+nominal__ChestPainType_ATA,-0.7726769805264129,0.7726769805264129,Decreases risk
+nominal__ChestPainType_NAP,-0.6642408838911324,0.6642408838911324,Decreases risk
+nominal__Sex_M,0.5983313483977737,0.5983313483977737,Increases risk
+passthrough__FastingBS,0.503689875745376,0.503689875745376,Increases risk
+numeric__MaxHR,-0.3878797364247595,0.3878797364247595,Decreases risk
+numeric__Oldpeak,0.16544845417600906,0.16544845417600906,Increases risk
+numeric__Age,0.0,0.0,Decreases risk
+numeric__RestingBP,0.0,0.0,Decreases risk
+numeric__Cholesterol,0.0,0.0,Decreases risk
+nominal__ChestPainType_TA,0.0,0.0,Decreases risk
+nominal__RestingECG_Normal,0.0,0.0,Decreases risk
+nominal__RestingECG_ST,0.0,0.0,Decreases risk

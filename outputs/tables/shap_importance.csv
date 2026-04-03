@@ -1,0 +1,15 @@
+feature,mean_abs_shap
+ordinal__ST_Slope,0.1730882053440238
+nominal__ExerciseAngina_Y,0.07575550502703716
+numeric__Oldpeak,0.053243995844319034
+numeric__MaxHR,0.05209847459963361
+nominal__ChestPainType_ATA,0.04754948730431344
+nominal__Sex_M,0.040552756731069964
+nominal__ChestPainType_NAP,0.03948908574307728
+passthrough__FastingBS,0.034072271811962464
+numeric__Cholesterol,0.024720916141129343
+numeric__Age,0.020227583663000735
+numeric__RestingBP,0.01366016744333384
+nominal__RestingECG_Normal,0.00594757128807796
+nominal__ChestPainType_TA,0.004906665950869783
+nominal__RestingECG_ST,0.0020544505529127054

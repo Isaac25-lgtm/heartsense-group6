@@ -1,0 +1,37 @@
+{
+  "selected_model": "rf",
+  "selected_model_name": "Random Forest",
+  "selected_threshold": 0.49,
+  "selection_rationale": "Selected before test set evaluation. Random Forest tied for the highest recall at the tuned threshold (0.9064, equal to XGBoost), and was chosen because it achieved stronger precision (0.8598 vs 0.844), higher F1-score (0.8825 vs 0.8741), and the best calibration (Brier 0.1065, lowest of all three models).",
+  "selection_evidence": [
+    {
+      "Model": "Logistic Regression",
+      "Threshold": 0.42,
+      "Recall@Thresh": 0.9015,
+      "Precision@Thresh": 0.8472,
+      "F1@Thresh": 0.8735,
+      "Brier": 0.1221
+    },
+    {
+      "Model": "Random Forest",
+      "Threshold": 0.49,
+      "Recall@Thresh": 0.9064,
+      "Precision@Thresh": 0.8598,
+      "F1@Thresh": 0.8825,
+      "Brier": 0.1065
+    },
+    {
+      "Model": "XGBoost",
+      "Threshold": 0.38,
+      "Recall@Thresh": 0.9064,
+      "Precision@Thresh": 0.844,
+      "F1@Thresh": 0.8741,
+      "Brier": 0.12
+    }
+  ],
+  "brier_scores": {
+    "lr": 0.1221,
+    "rf": 0.1065,
+    "xgb": 0.12
+  }
+}

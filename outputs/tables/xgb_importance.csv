@@ -1,0 +1,15 @@
+feature,gain_importance
+ordinal__ST_Slope,0.5169381
+nominal__Sex_M,0.06987506
+nominal__ChestPainType_ATA,0.058465797
+nominal__ChestPainType_NAP,0.05680904
+passthrough__FastingBS,0.056069743
+nominal__ExerciseAngina_Y,0.045760658
+numeric__MaxHR,0.033322312
+numeric__Oldpeak,0.032210436
+nominal__ChestPainType_TA,0.032190394
+numeric__RestingBP,0.02596224
+numeric__Cholesterol,0.022860082
+numeric__Age,0.019904947
+nominal__RestingECG_Normal,0.01758429
+nominal__RestingECG_ST,0.012046927

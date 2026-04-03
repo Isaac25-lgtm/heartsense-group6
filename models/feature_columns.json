@@ -1,0 +1,33 @@
+{
+  "full": [
+    "numeric__Age",
+    "numeric__RestingBP",
+    "numeric__Cholesterol",
+    "numeric__MaxHR",
+    "numeric__Oldpeak",
+    "nominal__Sex_M",
+    "nominal__ChestPainType_ATA",
+    "nominal__ChestPainType_NAP",
+    "nominal__ChestPainType_TA",
+    "nominal__RestingECG_Normal",
+    "nominal__RestingECG_ST",
+    "nominal__ExerciseAngina_Y",
+    "ordinal__ST_Slope",
+    "passthrough__FastingBS"
+  ],
+  "input_features": [
+    "Age",
+    "Sex",
+    "ChestPainType",
+    "RestingBP",
+    "Cholesterol",
+    "FastingBS",
+    "RestingECG",
+    "MaxHR",
+    "ExerciseAngina",
+    "Oldpeak",
+    "ST_Slope",
+    "BP_Category",
+    "HighCholesterol"
+  ]
+}

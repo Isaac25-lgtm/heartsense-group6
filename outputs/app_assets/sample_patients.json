@@ -1,0 +1,65 @@
+{
+  "True Positive (correctly flagged)": {
+    "index": 0,
+    "probability": 0.9639,
+    "true_label": 1,
+    "predicted": 1,
+    "features": {
+      "Age": 46,
+      "Sex": "M",
+      "ChestPainType": "ASY",
+      "RestingBP": 115.0,
+      "Cholesterol": NaN,
+      "FastingBS": 0,
+      "RestingECG": "Normal",
+      "MaxHR": 113,
+      "ExerciseAngina": "Y",
+      "Oldpeak": 1.5,
+      "ST_Slope": "Flat",
+      "BP_Category": 0.0,
+      "HighCholesterol": NaN
+    }
+  },
+  "False Negative (missed case)": {
+    "index": 1,
+    "probability": 0.3685,
+    "true_label": 1,
+    "predicted": 0,
+    "features": {
+      "Age": 58,
+      "Sex": "M",
+      "ChestPainType": "NAP",
+      "RestingBP": 132.0,
+      "Cholesterol": 224.0,
+      "FastingBS": 0,
+      "RestingECG": "LVH",
+      "MaxHR": 173,
+      "ExerciseAngina": "N",
+      "Oldpeak": 3.2,
+      "ST_Slope": "Up",
+      "BP_Category": 2.0,
+      "HighCholesterol": 0.0
+    }
+  },
+  "Borderline Case": {
+    "index": 5,
+    "probability": 0.4402,
+    "true_label": 0,
+    "predicted": 0,
+    "features": {
+      "Age": 42,
+      "Sex": "M",
+      "ChestPainType": "NAP",
+      "RestingBP": 120.0,
+      "Cholesterol": 240.0,
+      "FastingBS": 1,
+      "RestingECG": "Normal",
+      "MaxHR": 194,
+      "ExerciseAngina": "N",
+      "Oldpeak": 0.8,
+      "ST_Slope": "Down",
+      "BP_Category": 1.0,
+      "HighCholesterol": 0.0
+    }
+  }
+}
