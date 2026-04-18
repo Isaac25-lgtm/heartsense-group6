@@ -27,7 +27,8 @@ st.markdown(
     "Enter a patient's clinical measurements below and the model will estimate their "
     "heart disease risk. You can switch between the full model (which uses all 11 clinical "
     "features including exercise test results) and the routine-care model (which uses only "
-    "the 7 features available without specialised equipment)."
+    "the 7 features available without specialised equipment by removing MaxHR, "
+    "ExerciseAngina, Oldpeak, and ST_Slope)."
 )
 st.markdown(
     """
@@ -54,7 +55,7 @@ mode = st.radio(
     "Select Prediction Mode:",
     ["Full Model (11 clinical inputs)", "Routine-Care Model (7 inputs)"],
     horizontal=True,
-    help="The routine-care model uses only features available without exercise stress testing.",
+    help="The routine-care model removes MaxHR, ExerciseAngina, Oldpeak, and ST_Slope because they require exercise stress testing.",
 )
 
 is_routine = "Routine" in mode
@@ -67,8 +68,9 @@ if is_routine:
     )
 else:
     st.info(
-        "**Full Model Mode:** Uses all 11 predictors, including exercise stress test features. This is the strongest "
-        "version of the model because it has access to the richest clinical information."
+        "**Full Model Mode:** Uses all 11 predictors, including the four exercise stress-test features "
+        "**MaxHR, ExerciseAngina, Oldpeak, and ST_Slope**. This is the strongest version of the model "
+        "because it has access to the richest clinical information."
     )
 
 st.markdown("---")
