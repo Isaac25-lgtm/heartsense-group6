@@ -29,6 +29,12 @@ st.markdown(
     "features including exercise test results) and the routine-care model (which uses only "
     "the 7 features available without specialised equipment)."
 )
+st.markdown(
+    """
+**What this page is trying to show:** This is the deployment prototype of the project. It turns the trained model
+into a usable screening tool that can accept live patient measurements and return an interpretable risk estimate.
+"""
+)
 
 
 @st.cache_resource
@@ -59,9 +65,20 @@ if is_routine:
         "encounters at lower-level health facilities. Stress-test features "
         "(MaxHR, ExerciseAngina, Oldpeak, ST_Slope) are not required."
     )
+else:
+    st.info(
+        "**Full Model Mode:** Uses all 11 predictors, including exercise stress test features. This is the strongest "
+        "version of the model because it has access to the richest clinical information."
+    )
 
 st.markdown("---")
 st.subheader("Patient Clinical Data")
+st.markdown(
+    """
+**How to read this section:** The inputs are grouped into demographics, cardiovascular indicators, cardiac
+assessment, and exercise test results so that the form follows the same clinical structure used in the dataset.
+"""
+)
 
 if st.button("Load Sample Patient"):
     st.session_state["sample_loaded"] = True
@@ -216,6 +233,21 @@ if st.button("Predict Risk", type="primary", use_container_width=True):
         status_renderer(f"**Risk Category: {risk_cat}**")
 
     st.progress(min(max(prob, 0.0), 1.0))
+    st.caption(
+        f"The progress bar visualizes the predicted probability. The decision rule is simple: because the selected "
+        f"{model_label.lower()} threshold is **{threshold:.2f}**, any probability at or above that cutoff is flagged "
+        "as disease."
+    )
+    st.markdown(
+        f"""
+**What this result is trying to show:** The app combines the trained model, the selected threshold, and the
+patient's entered values to produce a screening decision.
+
+**What this result means:** This patient received a predicted probability of **{prob:.1%}**. Because that value is
+{"above" if prediction == 1 else "below"} the selected threshold of **{threshold:.2f}**, the tool classified the
+patient as **{"Heart Disease: PRESENT" if prediction == 1 else "Heart Disease: ABSENT"}**.
+"""
+    )
 
     # Clinical interpretation (safe, proof-of-concept language)
     if risk_cat == "HIGH":
@@ -266,6 +298,13 @@ if st.button("Predict Risk", type="primary", use_container_width=True):
     except Exception:
         st.caption("Feature importance data not available.")
 
+    st.markdown(
+        """
+**How to interpret this section safely:** The probability score and risk category are meant to support screening and
+referral decisions, not to replace clinical judgement. The listed priority features are global model drivers, not a
+live patient-specific explanation.
+"""
+    )
     st.caption(
         f"Model: {model_label} ({metadata['selected_model_name']})  |  "
         f"Threshold: {threshold:.2f}  |  "

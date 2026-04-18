@@ -4,7 +4,6 @@ warnings.filterwarnings("ignore")
 
 import streamlit as st
 import pandas as pd
-import json
 
 from src.config import FIGURES_DIR, TABLES_DIR, APP_ASSETS_DIR
 from src.artifacts import load_model_metadata, load_json
@@ -17,6 +16,7 @@ st.title("Model Explainability and Limitations")
 st.caption("Workflow Step 9: Documentation, Reflection, and Limitations")
 
 metadata = load_model_metadata()
+shap_df = pd.read_csv(TABLES_DIR / "shap_importance.csv") if (TABLES_DIR / "shap_importance.csv").exists() else None
 
 st.markdown("---")
 
@@ -26,6 +26,26 @@ st.markdown(
     "SHAP (SHapley Additive exPlanations) measures how much each feature pushes "
     "a prediction toward disease or toward normal. Features at the top matter most."
 )
+if shap_df is not None:
+    top_features = (
+        shap_df["feature"]
+        .str.replace("numeric__", "", regex=False)
+        .str.replace("nominal__", "", regex=False)
+        .str.replace("ordinal__", "", regex=False)
+        .str.replace("passthrough__", "", regex=False)
+        .head(5)
+        .tolist()
+    )
+    st.markdown(
+        f"""
+**What this section is trying to show:** It explains which variables the selected model relied on most across the
+test set.
+
+**What our results show:** The strongest global contributors were **{', '.join(top_features)}**. That is important
+because these were also among the strongest signals seen earlier in the EDA stage, so the explainability results are
+consistent with the broader data story.
+"""
+    )
 
 tab1, tab2 = st.tabs(["SHAP Summary (Beeswarm)", "SHAP Bar (Mean |SHAP|)"])
 
@@ -38,6 +58,13 @@ with tab1:
     fig_path = FIGURES_DIR / "shap_summary.png"
     if fig_path.exists():
         st.image(str(fig_path), width="stretch")
+    st.markdown(
+        """
+**How to interpret it:** Features near the top matter most overall. A wide horizontal spread means the feature can
+strongly influence predictions. Red points clustering on the right suggest higher values tend to push predictions
+toward disease, while blue points on the right suggest lower values are associated with higher risk.
+"""
+    )
 
 with tab2:
     st.markdown(
@@ -47,6 +74,12 @@ with tab2:
     fig_path = FIGURES_DIR / "shap_bar.png"
     if fig_path.exists():
         st.image(str(fig_path), width="stretch")
+    st.markdown(
+        """
+**How to interpret it:** This plot simplifies the SHAP story into a ranking. The longer the bar, the greater the
+average predictive contribution of that feature across the test set.
+"""
+    )
 
 # Feature importance comparison across models
 fig_path = FIGURES_DIR / "feature_importance_comparison.png"
@@ -62,6 +95,13 @@ if fig_path.exists():
     st.caption(
         "These rankings show predictive contribution within the models. "
         "They do not imply that these features cause heart disease."
+    )
+    st.markdown(
+        """
+**What this comparison is trying to show:** Different models measure feature importance differently. When the same
+features stay near the top across SHAP, Random Forest importance, and XGBoost gain, that strengthens confidence that
+those predictors genuinely mattered to model behaviour.
+"""
     )
 
 st.markdown("---")
@@ -101,6 +141,24 @@ try:
     else:
         st.caption("Waterfall plot not available for this patient.")
 
+    case_type = selected_patient.lower()
+    if "true positive" in case_type:
+        interpretation = (
+            "This example shows a correctly flagged disease case. The waterfall plot helps explain why the model was "
+            "confident and which features pushed the prediction strongly upward."
+        )
+    elif "false negative" in case_type:
+        interpretation = (
+            "This example shows a missed disease case. It is useful because it reveals where the model can still fail "
+            "and reminds us why clinical judgement remains essential."
+        )
+    else:
+        interpretation = (
+            "This example sits closer to the decision boundary. It helps show how competing feature effects can push a "
+            "prediction only slightly toward one class or the other."
+        )
+    st.markdown(f"**How to interpret this case:** {interpretation}")
+
 except Exception as e:
     st.caption(f"Sample patient data not available: {e}")
 
@@ -129,6 +187,18 @@ if lr_coef_path.exists():
         "Coefficients reflect association within the model after scaling, "
         "not causal clinical relationships."
     )
+    if not lr_df.empty:
+        strongest = lr_df.iloc[0]
+        st.markdown(
+            f"""
+**What this section is trying to show:** Logistic Regression provides the most direct coefficient-based explanation
+of feature influence.
+
+**What our results show:** The strongest coefficient by absolute size is **{strongest['feature']}**
+({strongest['coefficient']:.4f}), which the linear model associates with **{strongest['direction'].lower()}**.
+This helps us compare a transparent baseline model with the more complex tree-based models.
+"""
+        )
 
 st.markdown("---")
 
@@ -159,6 +229,16 @@ try:
         The recall-focused threshold aims to minimise missed cases at the cost of
         accepting more false alarms.
         """
+    )
+    st.markdown(
+        f"""
+**What this section is trying to show:** It focuses on where the model still fails, not just where it succeeds.
+
+**What our results show:** On the 184-patient test set, the model produced **{error_summary['n_fn']} false
+negatives** and **{error_summary['n_fp']} false positives** at the selected threshold of
+**{error_summary['threshold']:.2f}**. That means the model was tuned to miss fewer disease cases, even if that
+required accepting some extra false alarms.
+"""
     )
 
 except Exception as e:
@@ -206,4 +286,11 @@ st.markdown(
     health records, and developing a mobile-friendly deployment for offline use at
     Health Centre III/IV.
     """
+)
+st.markdown(
+    """
+**How to read this section:** These limitations are not weaknesses to hide. They are what keep the project honest.
+They explain why the app should be presented as a proof of concept screening-support system rather than as a finished
+clinical product.
+"""
 )

@@ -57,6 +57,10 @@ c1.metric("Total Records", eda["n_records"])
 c2.metric("Clinical Features", eda["n_features"])
 c3.metric("Heart Disease", f"{eda['target_counts']['disease']} ({eda['target_pct']['disease']}%)")
 c4.metric("Normal", f"{eda['target_counts']['normal']} ({eda['target_pct']['normal']}%)")
+st.caption(
+    "These headline numbers establish the scale of the dataset and confirm that this is a binary classification "
+    "problem with moderate class imbalance rather than a perfectly balanced dataset."
+)
 
 st.markdown(
     "This chart shows how many patients had heart disease versus those who did not. "
@@ -76,6 +80,17 @@ ax.set_ylabel("Count")
 ax.set_title("Target Class Distribution", fontweight="bold")
 st.pyplot(fig)
 plt.close()
+st.markdown(
+    f"""
+**What this graph is trying to show:** It compares the number of normal patients with the number of disease
+patients so we can see the class balance before modelling begins.
+
+**What our graph shows:** The disease class is slightly larger (**{eda['target_counts']['disease']}** cases,
+{eda['target_pct']['disease']}%) than the normal class (**{eda['target_counts']['normal']}** cases,
+{eda['target_pct']['normal']}%). That imbalance is not severe, but it is large enough to justify stratified
+splitting and recall-focused evaluation later in the project.
+"""
+)
 
 st.markdown("---")
 
@@ -108,6 +123,19 @@ if selected_feature in eda["numeric_features"]:
         ax.legend()
         st.pyplot(fig)
         plt.close()
+        normal_median = df_clean[df_clean[TARGET] == 0][selected_feature].median()
+        disease_median = df_clean[df_clean[TARGET] == 1][selected_feature].median()
+        direction = "higher" if disease_median > normal_median else "lower"
+        st.markdown(
+            f"""
+**What this histogram is trying to show:** It compares the spread of **{selected_feature}** in normal and disease
+patients so we can see whether the two groups cluster differently.
+
+**What our graph shows:** The disease group tends to have a **{direction}** median value for
+**{selected_feature}** than the normal group ({disease_median:.2f} vs {normal_median:.2f}). That means this feature
+shows some separation between the classes and may contribute useful predictive information.
+"""
+        )
 
     with col2:
         fig, ax = plt.subplots(figsize=(6, 4))
@@ -117,9 +145,19 @@ if selected_feature in eda["numeric_features"]:
         ax.set_title(f"{selected_feature} by Target", fontweight="bold")
         st.pyplot(fig)
         plt.close()
+        st.markdown(
+            """
+**What this boxplot is trying to show:** It summarizes the median, spread, and extreme values for each class.
+
+**How to interpret it:** A shift in the median line or overall box position suggests that the feature behaves
+differently in disease and normal patients. Outliers are shown but not automatically treated as errors, because in a
+clinical dataset extreme values may still be real and meaningful.
+"""
+        )
 
     st.markdown("**Summary Statistics by Class:**")
     st.dataframe(df_clean.groupby(TARGET)[selected_feature].describe().round(2))
+    st.caption("These summary statistics provide the exact numerical version of the patterns seen in the histogram and boxplot.")
 
 else:
     st.markdown(
@@ -137,12 +175,25 @@ else:
         ax.legend(title="")
         st.pyplot(fig)
         plt.close()
+        ct_pct = pd.crosstab(df[selected_feature], df[TARGET], normalize="index") * 100
+        top_category = ct_pct[1].idxmax()
+        top_rate = ct_pct.loc[top_category, 1]
+        st.markdown(
+            f"""
+**What this bar chart is trying to show:** It compares how often each category appears in the normal and disease
+groups.
+
+**What our graph shows:** For **{selected_feature}**, the category with the highest disease rate is
+**{top_category}**, where about **{top_rate:.1f}%** of patients fall in the disease class. That is why some
+categories become strong predictors later in the modelling stage.
+"""
+        )
 
     with col2:
         st.markdown("**Disease Rate by Category:**")
-        ct_pct = pd.crosstab(df[selected_feature], df[TARGET], normalize="index") * 100
         ct_pct.columns = ["Normal %", "Disease %"]
         st.dataframe(ct_pct.round(1))
+        st.caption("This table converts raw counts into percentages, which makes the class association easier to interpret.")
 
 st.markdown("---")
 
@@ -172,6 +223,12 @@ with col2:
 
     **Duplicates:** {eda['duplicates']}
     """)
+st.markdown(
+    """
+**Why this section matters:** These checks show that EDA did not stop at drawing charts. It directly identified the
+major data-quality problem in the project and motivated the preprocessing decisions used later in the pipeline.
+"""
+)
 
 st.markdown("---")
 
@@ -192,6 +249,20 @@ sns.heatmap(corr_matrix, mask=mask, annot=True, fmt=".2f", cmap="RdBu_r",
 ax.set_title("Pearson Correlation Heatmap", fontweight="bold")
 st.pyplot(fig)
 plt.close()
+
+target_corr = corr_matrix[TARGET].drop(TARGET).sort_values(key=lambda s: s.abs(), ascending=False)
+top_corr_feature = target_corr.index[0]
+top_corr_value = target_corr.iloc[0]
+st.markdown(
+    f"""
+**What this heatmap is trying to show:** It checks how strongly the numeric features move together and how each one
+relates to the target.
+
+**What our graph shows:** The strongest numeric relationship with the target is **{top_corr_feature}**
+({top_corr_value:.2f}). More broadly, the heatmap helps us see whether numeric predictors overlap too strongly, which
+matters especially for interpretation and for models like Logistic Regression.
+"""
+)
 
 st.markdown("---")
 

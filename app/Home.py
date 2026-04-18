@@ -52,6 +52,10 @@ col1.metric("Dataset Records", "918")
 col2.metric("Clinical Features", "11")
 col3.metric("Source Institutions", "5")
 col4.metric("ML Models Compared", "3")
+st.caption(
+    "These summary cards orient the audience before the technical pages begin. They show the scale of the dataset, "
+    "how many predictors were available, where the records came from, and how many candidate algorithms were compared."
+)
 
 st.markdown("---")
 
@@ -92,4 +96,12 @@ st.markdown(
     Navigate using the sidebar to explore data insights, model performance,
     the clinical prediction tool, and model explainability.
     """
+)
+
+st.markdown(
+    """
+**How to read the app:** The pages are arranged in the same order as the project workflow. We begin with the
+dataset and early patterns, then justify the final model, then demonstrate live prediction, and finally explain the
+model's behaviour, errors, and limitations.
+"""
 )
